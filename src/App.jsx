@@ -193,30 +193,45 @@ function App() {
           </div>
 
           {/* Hero Banner Grid/Card */}
-          <div className="relative w-full h-[50vh] md:h-[70vh] rounded-lg overflow-hidden group">
-            <img
-              src={HERO_DATA.bannerImage}
-              alt="Obsidian Showcase Banner"
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+          <div className="relative w-full rounded-lg overflow-hidden group">
+            <div className="w-full h-[50vh] md:h-[70vh] relative">
+              <img
+                src={HERO_DATA.bannerImage}
+                alt="Obsidian Showcase Banner"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
 
-            {/* Overlay card */}
-            <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 bg-white/95 backdrop-blur-sm p-6 md:p-8 rounded-lg max-w-sm md:max-w-md shadow-2xl transition-all duration-300 border border-white/20 hover:bg-white text-brand-dark">
-              <p className="text-sm md:text-base font-light italic leading-relaxed mb-6">
+              {/* Overlay card — desktop only absolute */}
+              <div className="hidden md:block absolute bottom-12 right-12 bg-white/95 backdrop-blur-sm p-8 rounded-lg max-w-md shadow-2xl transition-all duration-300 border border-white/20 hover:bg-white text-brand-dark">
+                <p className="text-base font-light italic leading-relaxed mb-6">
+                  "{HERO_DATA.quote}"
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] tracking-[0.2em] font-bold uppercase text-brand-muted">
+                    {HERO_DATA.quoteTag}
+                  </span>
+                  <a
+                    href="#contact"
+                    className="bg-brand-dark text-white px-5 py-2.5 text-xs font-semibold tracking-widest rounded-full hover:bg-neutral-800 transition-colors"
+                  >
+                    {HERO_DATA.buttonText}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile card — stacked below image */}
+            <div className="md:hidden bg-white/95 p-6 rounded-b-lg shadow-md border border-black/5 text-brand-dark">
+              <p className="text-sm font-light italic leading-relaxed mb-5">
                 "{HERO_DATA.quote}"
               </p>
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] tracking-[0.2em] font-bold uppercase text-brand-muted">
-                  {HERO_DATA.quoteTag}
-                </span>
-                <a
-                  href="#contact"
-                  className="bg-brand-dark text-white px-5 py-2.5 text-xs font-semibold tracking-widest rounded-full hover:bg-neutral-800 transition-colors"
-                >
-                  {HERO_DATA.buttonText}
-                </a>
-              </div>
+              <a
+                href="#contact"
+                className="inline-block bg-brand-dark text-white px-5 py-2.5 text-xs font-semibold tracking-widest rounded-full hover:bg-neutral-800 transition-colors"
+              >
+                {HERO_DATA.buttonText}
+              </a>
             </div>
           </div>
 

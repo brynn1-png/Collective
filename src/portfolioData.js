@@ -28,17 +28,17 @@ export const HERO_DATA = {
 export const MEMBERS = [
   {
     name: "SATRIA C.",
-    role: "DEVELOPER",
+    role: "BACK-END DEVELOPER",
     image: satriaPhoto,
   },
   {
     name: "BRYAN M.",
-    role: "DEVELOPER",
+    role: "FULL-STACK DEVELOPER",
     image: bryanPhoto,
   },
   {
     name: "KRISTINE P.",
-    role: "DEVELOPER",
+    role: "FRONT-END DEVELOPER",
     image: kristinePhoto,
   },
 ];
