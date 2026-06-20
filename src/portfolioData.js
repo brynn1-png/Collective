@@ -1,10 +1,22 @@
 // Portfolio configuration data
 // Edit this file to customize the content of your portfolio website.
 
+// Import asset images
+import heroBanner from "./assets/hero.png";
+import satriaPhoto from "./assets/image.png";
+import bryanPhoto from "./assets/image1.png";
+import kristinePhoto from "./assets/image2.png";
+
+// Import project images
+import project1Image from "./projects/project1.png";
+import project2Image from "./projects/project.png";
+import project3Image from "./projects/project2.png";
+import project4Image from "./projects/project3.png";
+
 export const HERO_DATA = {
   title: "CREATION",
   subtitle: "WHAT EVER YOU CAN THINK , WE CAN BUILD",
-  bannerImage: "/src/assets/hero.png",
+  bannerImage: heroBanner,
   quote: "We don’t just develop— ,we build exactly what your business needs.",
 
   buttonText: "GET IN TOUCH",
@@ -17,17 +29,17 @@ export const MEMBERS = [
   {
     name: "SATRIA C.",
     role: "DEVELOPER",
-    image: "/src/assets/image.png",
+    image: satriaPhoto,
   },
   {
     name: "BRYAN M.",
     role: "DEVELOPER",
-    image: "src/assets/image1.png",
+    image: bryanPhoto,
   },
   {
     name: "KRISTINE P.",
     role: "DEVELOPER",
-    image: "src/assets/image2.png",
+    image: kristinePhoto,
   },
 ];
 
@@ -60,7 +72,7 @@ export const PROJECTS = [
     id: 1,
     title: "RECTO MEMORIAL NHS WEBSITE",
     category: "OJT PROJECT",
-    image: "/src/projects/project1.png",
+    image: project1Image,
     size: "md:col-span-2 aspect-[16/9] md:aspect-auto",
     link: "https://rectomnhs-website.vercel.app/",
     isPrivate: false,
@@ -69,7 +81,7 @@ export const PROJECTS = [
     id: 2,
     title: "RECTO MEMORIAL NHS INVENTORY SYSTEM",
     category: "OJT PROJECT",
-    image: "/src/projects/project.png",
+    image: project2Image,
     size: "aspect-[4/3]",
     isPrivate: true,
   },
@@ -77,7 +89,7 @@ export const PROJECTS = [
     id: 3,
     title: "RMNHS CANTEEN SALES AUTOMATED COMPUTATION",
     category: "OJT PROJECT",
-    image: "/src/projects/project2.png",
+    image: project3Image,
     size: "aspect-[4/3]",
     isPrivate: true,
   },
@@ -85,7 +97,7 @@ export const PROJECTS = [
     id: 4,
     title: "EMPLOYEE ATTENDANCE & MANAGEMENT SYSTEM",
     category: "OJT PROJECT",
-    image: "/src/projects/project3.png",
+    image: project4Image,
     size: "md:col-span-2 aspect-[16/9] md:aspect-auto",
     isPrivate: true,
   },
