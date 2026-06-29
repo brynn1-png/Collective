@@ -30,16 +30,19 @@ export const MEMBERS = [
     name: "SATRIA C.",
     role: "BACK-END DEVELOPER",
     image: satriaPhoto,
+    portfolioUrl: "#", // Replace with Satria's portfolio URL
   },
   {
     name: "BRYAN M.",
     role: "FULL-STACK DEVELOPER",
     image: bryanPhoto,
+    portfolioUrl: "https://brynmgny.vercel.app/", // Replace with Bryan's portfolio URL
   },
   {
     name: "KRISTINE P.",
     role: "FRONT-END DEVELOPER",
     image: kristinePhoto,
+    portfolioUrl: "https://krstnprz-portfolio.vercel.app/", // Replace with Kristine's portfolio URL
   },
 ];
 
@@ -64,7 +67,6 @@ export const TECH_STACK = [
     title: "PostgreSQL, MySQL & NoSQL",
     desc: "Designing scalable schemas, query optimizations, and secure data storage using relational and document databases.",
   },
-  
 ];
 
 export const PROJECTS = [
@@ -72,8 +74,9 @@ export const PROJECTS = [
     id: 1,
     title: "RECTO MEMORIAL NHS WEBSITE",
     category: "OJT PROJECT",
+    description:
+      "A responsive school website built for Recto Memorial National High School, featuring announcements, events, and an online enrollment inquiry system.",
     image: project1Image,
-    size: "md:col-span-2 aspect-[16/9] md:aspect-auto",
     link: "https://rectomnhs-website.vercel.app/",
     isPrivate: false,
   },
@@ -81,24 +84,27 @@ export const PROJECTS = [
     id: 2,
     title: "RECTO MEMORIAL NHS INVENTORY SYSTEM",
     category: "OJT PROJECT",
+    description:
+      "An inventory management system for tracking school supplies, equipment, and assets with real-time stock monitoring and reporting features.",
     image: project2Image,
-    size: "aspect-[4/3]",
     isPrivate: true,
   },
   {
     id: 3,
     title: "RMNHS CANTEEN SALES AUTOMATED COMPUTATION",
     category: "OJT PROJECT",
+    description:
+      "An automated sales computation system for the school canteen that streamlines transactions, tracks daily sales, and generates revenue reports.",
     image: project3Image,
-    size: "aspect-[4/3]",
     isPrivate: true,
   },
   {
     id: 4,
     title: "EMPLOYEE ATTENDANCE & MANAGEMENT SYSTEM",
     category: "OJT PROJECT",
+    description:
+      "A comprehensive system for managing employee attendance, schedules, and payroll with automated time tracking and leave management.",
     image: project4Image,
-    size: "md:col-span-2 aspect-[16/9] md:aspect-auto",
     isPrivate: true,
   },
 ];

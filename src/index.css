@@ -34,3 +34,99 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #8c8c8c;
 }
+
+/* Scroll-triggered animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Base state - hidden before scroll */
+.animate-fade-up,
+.animate-fade-left,
+.animate-fade-right,
+.animate-fade,
+.animate-scale-in {
+  opacity: 0;
+}
+
+/* Visible state - triggers animation */
+.animate-fade-up.is-visible {
+  animation: fade-up 0.7s ease-out forwards;
+}
+
+.animate-fade-left.is-visible {
+  animation: fade-left 0.7s ease-out forwards;
+}
+
+.animate-fade-right.is-visible {
+  animation: fade-right 0.7s ease-out forwards;
+}
+
+.animate-fade.is-visible {
+  animation: fade 0.7s ease-out forwards;
+}
+
+.animate-scale-in.is-visible {
+  animation: scale-in 0.7s ease-out forwards;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-left,
+  .animate-fade-right,
+  .animate-fade,
+  .animate-scale-in {
+    opacity: 1;
+    animation: none;
+  }
+}
