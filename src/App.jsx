@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   HERO_DATA,
   MEMBERS,
@@ -20,6 +21,43 @@ function App() {
     email: "",
     message: "",
   });
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: true,
+    slidesToScroll: 1,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi],
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   const handleProjectClick = (project) => {
     if (project.isPrivate) {
@@ -366,48 +404,107 @@ function App() {
                 </h2>
               </AnimatedSection>
             </div>
+            <AnimatedSection animation="fade-up" delay={200}>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={scrollPrev}
+                  className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center hover:bg-brand-dark hover:text-white transition-all duration-300 cursor-pointer"
+                  aria-label="Previous project"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={scrollNext}
+                  className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center hover:bg-brand-dark hover:text-white transition-all duration-300 cursor-pointer"
+                  aria-label="Next project"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </AnimatedSection>
           </div>
 
-          {/* Grid Layout */}
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {filteredProjects.map((project, index) => (
-              <AnimatedSection
-                key={project.id}
-                animation="scale"
-                delay={index * 100}
-              >
+          {/* Carousel */}
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-6">
+              {filteredProjects.map((project) => (
                 <div
-                  onClick={() => handleProjectClick(project)}
-                  className="group flex flex-col bg-white p-4 rounded-2xl shadow-sm border border-black/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+                  key={project.id}
+                  className="flex-none w-full md:w-[calc(50%-12px)] min-w-0"
                 >
-                  <div className="overflow-hidden rounded-xl bg-neutral-100 aspect-[16/10] relative">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 shadow-lg">
-                      <span className="text-brand-dark text-sm font-bold">
-                        →
-                      </span>
+                  <div
+                    onClick={() => handleProjectClick(project)}
+                    className="group flex flex-col bg-white p-4 rounded-2xl shadow-sm border border-black/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer h-full"
+                  >
+                    <div className="overflow-hidden rounded-xl bg-neutral-100 aspect-[16/10] relative">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 shadow-lg">
+                        <span className="text-brand-dark text-sm font-bold">
+                          →
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="mt-5 flex justify-between items-start">
-                    <div>
-                      <span className="inline-block text-[10px] tracking-[0.15em] font-bold text-brand-muted bg-neutral-100 px-3 py-1 rounded-full mb-3 uppercase">
-                        {project.category}
-                      </span>
-                      <h3 className="text-lg font-bold tracking-wide leading-tight mb-2">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-brand-muted leading-relaxed">
-                        {project.description}
-                      </p>
+                    <div className="mt-5 flex justify-between items-start">
+                      <div>
+                        <span className="inline-block text-[10px] tracking-[0.15em] font-bold text-brand-muted bg-neutral-100 px-3 py-1 rounded-full mb-3 uppercase">
+                          {project.category}
+                        </span>
+                        <h3 className="text-lg font-bold tracking-wide leading-tight mb-2">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm text-brand-muted leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </AnimatedSection>
+              ))}
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-2 mt-8">
+            {filteredProjects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  selectedIndex === index
+                    ? "bg-brand-dark w-8"
+                    : "bg-neutral-300 hover:bg-neutral-400"
+                }`}
+                aria-label={`Go to project ${index + 1}`}
+              />
             ))}
           </div>
         </section>
