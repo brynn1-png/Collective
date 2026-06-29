@@ -21,6 +21,44 @@ function App() {
     email: "",
     message: "",
   });
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const sections = ["home", "collective", "tech-stack", "projects", "contact"];
+    const observers = [];
+
+    sections.forEach((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(sectionId);
+          }
+        },
+        { threshold: 0.3 },
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((obs) => obs.disconnect());
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -117,6 +155,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-dark flex flex-col font-sans selection:bg-brand-dark selection:text-white">
+      {/* Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent">
+        <div
+          className="h-full bg-brand-dark transition-[width] duration-150"
+          style={{ width: `${scrollProgress}%` }}
+        ></div>
+      </div>
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-black/5 py-5 px-6 md:px-12 flex justify-between items-center transition-all duration-300">
         <a
@@ -127,33 +173,71 @@ function App() {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex space-x-10 text-xs tracking-[0.2em] font-semibold text-brand-muted">
-          <a href="#home" className="hover:text-brand-dark transition-colors">
+        <nav className="hidden md:flex space-x-10 text-xs tracking-[0.2em] font-semibold">
+          <a
+            href="#home"
+            className={`transition-colors relative py-1 ${
+              activeSection === "home"
+                ? "text-brand-dark"
+                : "text-brand-muted hover:text-brand-dark"
+            }`}
+          >
             HOME
+            {activeSection === "home" && (
+              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-brand-dark rounded-full"></span>
+            )}
           </a>
           <a
             href="#collective"
-            className="hover:text-brand-dark transition-colors"
+            className={`transition-colors relative py-1 ${
+              activeSection === "collective"
+                ? "text-brand-dark"
+                : "text-brand-muted hover:text-brand-dark"
+            }`}
           >
             THE COLLECTIVE
+            {activeSection === "collective" && (
+              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-brand-dark rounded-full"></span>
+            )}
           </a>
           <a
             href="#tech-stack"
-            className="hover:text-brand-dark transition-colors"
+            className={`transition-colors relative py-1 ${
+              activeSection === "tech-stack"
+                ? "text-brand-dark"
+                : "text-brand-muted hover:text-brand-dark"
+            }`}
           >
             TECH STACK
+            {activeSection === "tech-stack" && (
+              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-brand-dark rounded-full"></span>
+            )}
           </a>
           <a
             href="#projects"
-            className="hover:text-brand-dark transition-colors"
+            className={`transition-colors relative py-1 ${
+              activeSection === "projects"
+                ? "text-brand-dark"
+                : "text-brand-muted hover:text-brand-dark"
+            }`}
           >
             PROJECTS
+            {activeSection === "projects" && (
+              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-brand-dark rounded-full"></span>
+            )}
           </a>
           <a
             href="#contact"
-            className="hover:text-brand-dark transition-colors"
+            className={`transition-colors relative py-1 ${
+              activeSection === "contact"
+                ? "text-brand-dark"
+                : "text-brand-muted hover:text-brand-dark"
+            }`}
           >
             CONTACT
+            {activeSection === "contact" && (
+              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-brand-dark rounded-full"></span>
+            )}
           </a>
         </nav>
 
@@ -182,35 +266,35 @@ function App() {
         <a
           href="#home"
           onClick={() => setMobileMenuOpen(false)}
-          className="hover:text-neutral-500 transition-colors"
+          className={`transition-colors ${activeSection === "home" ? "text-brand-dark" : "text-brand-muted hover:text-brand-dark"}`}
         >
           HOME
         </a>
         <a
           href="#collective"
           onClick={() => setMobileMenuOpen(false)}
-          className="hover:text-neutral-500 transition-colors"
+          className={`transition-colors ${activeSection === "collective" ? "text-brand-dark" : "text-brand-muted hover:text-brand-dark"}`}
         >
           THE COLLECTIVE
         </a>
         <a
           href="#tech-stack"
           onClick={() => setMobileMenuOpen(false)}
-          className="hover:text-neutral-500 transition-colors"
+          className={`transition-colors ${activeSection === "tech-stack" ? "text-brand-dark" : "text-brand-muted hover:text-brand-dark"}`}
         >
           TECH STACK
         </a>
         <a
           href="#projects"
           onClick={() => setMobileMenuOpen(false)}
-          className="hover:text-neutral-500 transition-colors"
+          className={`transition-colors ${activeSection === "projects" ? "text-brand-dark" : "text-brand-muted hover:text-brand-dark"}`}
         >
           PORTFOLIO
         </a>
         <a
           href="#contact"
           onClick={() => setMobileMenuOpen(false)}
-          className="hover:text-neutral-500 transition-colors"
+          className={`transition-colors ${activeSection === "contact" ? "text-brand-dark" : "text-brand-muted hover:text-brand-dark"}`}
         >
           CONTACT
         </a>
